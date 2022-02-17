@@ -4,14 +4,14 @@
 #include <ZumoBuzzer.h>
 
 // Zumo speeds, maximum allowed is 400
-#define ZUMO_FAST         300
-#define ZUMO_SLOW         220
+#define ZUMO_FAST         285
+#define ZUMO_SLOW         200
 #define ZUMO_SPIN         300
 #define X_CENTER          (pixy.frameWidth/2)
 
 // Pixy camera angle
 #define PIXY_X            500            
-#define PIXY_Y            730
+#define PIXY_Y            740
 
 // Constants for when no vector is found
 #define SPIN_MAX_LOOP_NUMBER 75
@@ -22,7 +22,7 @@ ZumoBuzzer buzzer;
 int8_t spin_count;
 bool need_spin;
 
-PIDLoop headingLoop(8500, 0.01, 550, false); // P=8500, I=0.01, D=550 for speed = 300, 220
+PIDLoop headingLoop(8500, 0.01, 520, false); // P=8500, I=0.01, D=550 for speed = 300, 220
 
 void setup() 
 {
