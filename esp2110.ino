@@ -22,7 +22,7 @@ ZumoBuzzer buzzer;
 int8_t spin_count;
 bool need_spin;
 
-PIDLoop headingLoop(8500, 0.01, 520, false); // P=8500, I=0.01, D=550 for speed = 300, 220
+PIDLoop headingLoop(8500, 0.01, 520, false);
 
 void setup() 
 {
