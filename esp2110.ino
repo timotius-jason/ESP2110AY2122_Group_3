@@ -46,7 +46,6 @@ void setup()
   need_spin = true;
 }
 
-
 void loop()
 {
   int8_t res;
