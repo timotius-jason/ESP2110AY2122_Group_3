@@ -1,20 +1,3 @@
-//
-// begin license header
-//
-// This file is part of Pixy CMUcam5 or "Pixy" for short
-//
-// All Pixy source code is provided under the terms of the
-// GNU General Public License v2 (http://www.gnu.org/licenses/gpl-2.0.html).
-// Those wishing to use Pixy source code, software and/or
-// technologies under different licensing terms should contact us at
-// cmucam@cs.cmu.edu. Such licensing terms are available for
-// all portions of the Pixy codebase presented here.
-//
-// end license header
-//
-// TODO: 1. Reduce shaking/oscillation
-//       2. Make it more robust: always go for the straightest line
-//       3. Elevate pixy camera when there are no lines detected even after rotating 
 #include <Pixy2.h>
 #include <PIDLoop.h>
 #include <ZumoMotors.h>
@@ -30,8 +13,8 @@
 #define PIXY_X            500            
 #define PIXY_Y            730
 
-// Constants when no vector is found
-#define SPIN_MAX_LOOP_NUMBER 70
+// Constants for when no vector is found
+#define SPIN_MAX_LOOP_NUMBER 75
 
 Pixy2 pixy;
 ZumoMotors motors;
@@ -39,7 +22,7 @@ ZumoBuzzer buzzer;
 int8_t spin_count;
 bool need_spin;
 
-PIDLoop headingLoop(8500, 0, 450, false); // P=8500, I=0.01, D=420 for speed = 300, 220
+PIDLoop headingLoop(8500, 0.01, 550, false); // P=8500, I=0.01, D=550 for speed = 300, 220
 
 void setup() 
 {
@@ -69,7 +52,6 @@ void loop()
   int8_t res;
   int32_t error; 
   int left, right;
-  // char buf[96];
 
   // Get latest data from Pixy, including main vector, new intersections and new barcodes.
   res = pixy.line.getMainFeatures();
@@ -97,8 +79,8 @@ void loop()
     motors.setLeftSpeed(left);
     motors.setRightSpeed(right);
     buzzer.playFrequency(500, 50, 15);
-    //Serial.print("stop ");
-    //Serial.println(res);
+    Serial.print("stop ");
+    Serial.println(res);
     return;
   }
 
@@ -141,14 +123,6 @@ void loop()
     motors.setRightSpeed(right);
     need_spin = true;
     spin_count = 0;
-
   }
 
-  // If intersection, do nothing (we've already set the turn), but acknowledge with a beep.
-  // if (res&LINE_INTERSECTION)
-  // {
-  //   buzzer.playFrequency(1000, 100, 15);
-  //   pixy.line.intersections->print();
-  // }
-  // Serial.println((int)error);
 }
